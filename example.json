@@ -1,0 +1,122 @@
+{
+    "type": "force",
+    "timeline":[       #30天
+        1,
+        2,
+        3,
+        ……
+    ],
+    "categories": [    #57家媒体
+        {
+            "name": "1",
+            "keyword": {},
+            "base": "1"
+        },
+        {
+            "name": "2",
+            "keyword": {},
+            "base": "2"
+        }
+    ],
+    "nodes": [         #每天哪些网站参与
+        [{
+            "name": "AudioParam",
+            "value": 1,
+            "category": 0
+        },
+        {
+            "name": "AudioContext",
+            "value": 1,
+            "category": 1
+        },
+        {
+            "name": "AudioDestinationNode",
+            "value": 1,
+            "category": 2
+        }],
+        [{
+            "name": "AudioParam",
+            "value": 1,
+            "category": 0
+        },
+        {
+            "name": "AudioContext",
+            "value": 1,
+            "category": 1
+        },
+        {
+            "name": "AudioDestinationNode",
+            "value": 1,
+            "category": 2
+        },
+        {
+            "name": "AudioListener",
+            "value": 1,
+            "category": 3
+        },
+        {
+            "name": "BiquadFilterNode",
+            "value": 1,
+            "category": 4
+        }],
+        [{
+            "name": "AudioParam",
+            "value": 1,
+            "category": 0
+        },
+        {
+            "name": "AudioContext",
+            "value": 1,
+            "category": 1
+        },
+        {
+            "name": "AudioDestinationNode",
+            "value": 1,
+            "category": 2
+        },
+        {
+            "name": "AudioListener",
+            "value": 1,
+            "category": 3
+        },
+        {
+            "name": "BiquadFilterNode",
+            "value": 1,
+            "category": 4
+        }]
+    ],
+    "links": [        #每天link 情况
+        [{
+            "source": 0,
+            "target": 1
+        },
+        {
+            "source": 0,
+            "target": 2
+        }],
+        [{
+            "source": 0,
+            "target": 1
+        },
+        {
+            "source": 0,
+            "target": 2
+        },
+        {
+            "source": 3,
+            "target": 4
+        }],
+        [{
+            "source": 0,
+            "target": 1
+        },
+        {
+            "source": 0,
+            "target": 2
+        },
+        {
+            "source": 3,
+            "target": 4
+        }]
+    ]
+}
