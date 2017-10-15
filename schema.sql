@@ -1,22 +1,58 @@
--- schema.sql
+-- MySQL dump 10.13  Distrib 5.7.19, for Linux (x86_64)
+--
+-- Host: localhost    Database: CN_demo
+-- ------------------------------------------------------
+-- Server version	5.7.19-0ubuntu0.16.04.1
 
-drop database if exists CN_demo;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-create database CN_demo;
+--
+-- Table structure for table `users`
+--
 
-use CN_demo;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `passwd` varchar(50) NOT NULL,
+  `admin` tinyint(1) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `image` varchar(500) NOT NULL,
+  `created_at` double NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_email` (`email`),
+  KEY `idx_created_at` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-grant select, insert, update, delete on CN_demo.* to 'www-data'@'localhost' identified by 'www-data';
+--
+-- Dumping data for table `users`
+--
 
-create table users (
-    `id` varchar(50) not null,
-    `email` varchar(50) not null,
-    `passwd` varchar(50) not null,
-    `admin` bool not null,
-    `name` varchar(50) not null,
-    `image` varchar(500) not null,
-    `created_at` real not null,
-    unique key `idx_email` (`email`),
-    key `idx_created_at` (`created_at`),
-    primary key (`id`)
-) engine=innodb default charset=utf8;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('0014984602207973c3bd6fa77c84c17bd75c0e566a44553000','yaowy@tju.edu.cn','3abc28aa3435dc5e49ac479d62ee8943e54bcd25',1,'姚唯一','about://blank',1498460220.79789);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-10-15 22:09:38

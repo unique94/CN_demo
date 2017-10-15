@@ -1,60 +1,22 @@
 __author__ = 'ywy'
 
 import asyncio
-import hashlib
+import hashlib, time, json
 
 from coroweb import get,post
 from models import User
 from apis import APIValueError, APIPermissionError
+from aiohttp import web
+from config import configs
 
 COOKIE_NAME = 'awesession'
-
+_COOKIE_KEY = configs.session.secret
 
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
         return False
         #raise APIPermissionError()
     return True
-
-@get('/')
-def index(request):
-    if check_admin(request):
-        return {
-        '__template__': 'test.html'
-        }
-    else:
-        print('error=================')
-        return {
-            '__template__': 'signin.html'
-        }
-
-
-@post('/api/authenticate')
-async def authenticate(*, email, passwd):
-    if not email:
-        raise APIValueError('email', 'Invalid email.')
-    if not passwd:
-        raise APIValueError('passwd', 'Invalid password.')
-    users = await User.findAll('email=?', [email])
-    if len(users) == 0:
-        raise APIValueError('email', 'Email not exist.')
-    user = users[0]
-    # check passwd:
-    sha1 = hashlib.sha1()
-    sha1.update(user.id.encode('utf-8'))
-    sha1.update(b':')
-    sha1.update(passwd.encode('utf-8'))
-    if user.passwd != sha1.hexdigest():
-        raise APIValueError('passwd', 'Invalid password.')
-    # authenticate ok, set cookie:
-    r = web.Response()
-    r.set_cookie(COOKIE_NAME, user2cookie(user, 86400), max_age=86400, httponly=True)
-    user.passwd = '******'
-    r.content_type = 'application/json'
-    r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
-    print('success')
-    return r
-
 
 # 计算加密cookie:
 def user2cookie(user, max_age):
@@ -89,6 +51,61 @@ async def cookie2user(cookie_str):
     except Exception as e:
         logging.exception(e)
         return None
+
+
+
+#@get('/signin')
+#def signin():
+#    return {
+#        '__template__': 'signin.html'
+#    }
+
+
+@get('/')
+def index(request):
+    if check_admin(request):
+        return {
+            '__template__': 'index.html'
+        }
+    else:
+        return {
+            '__template__': 'signin.html'
+        }
+
+
+@get('/api/users')
+async def aip_get_users():
+    users = await User.findAll(orderBy = 'created_at desc')
+    for u in users:
+        u.passwd = '*****'
+    return dict(users=users)
+
+
+@post('/api/authenticate')
+async def authenticate(*, email, passwd):
+    if not email:
+        raise APIValueError('email', 'Invalid email.')
+    if not passwd:
+        raise APIValueError('passwd', 'Invalid password.')
+    users = await User.findAll('email=?', [email])
+    print('has users ---->')
+    if len(users) == 0:
+        raise APIValueError('email', 'Email not exist.')
+    user = users[0]
+    # check passwd:
+    sha1 = hashlib.sha1()
+    sha1.update(user.id.encode('utf-8'))
+    sha1.update(b':')
+    sha1.update(passwd.encode('utf-8'))
+    if user.passwd != sha1.hexdigest():
+        raise APIValueError('passwd', 'Invalid password.')
+    # authenticate ok, set cookie:
+    r = web.Response()
+    r.set_cookie(COOKIE_NAME, user2cookie(user, 86400), max_age=86400, httponly=True)
+    user.passwd = '******'
+    r.content_type = 'application/json'
+    r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
+    return r
 
 
 

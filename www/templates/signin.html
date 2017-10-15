@@ -4,7 +4,7 @@
 <head>
 
         <meta charset="utf-8">
-        <title>Fullscreen Login</title>
+        <title>Login in</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -13,6 +13,36 @@
         <link rel="stylesheet" href="../static/css/bootstrap.min.css" >
         <link rel="stylesheet" href="../static/css/index.css" >
 
+        <script src="../static/js/jquery.min.js"></script>
+        <script src="../static/js/sha1.min.js"></script>
+        <script src="../static/js/vue.min.js"></script>
+
+        <script>
+        $(function() {
+             var vmAuth = new Vue({
+                 el: '#vm',
+                 data: {
+                     email: '',
+                     passwd: ''
+                 },
+                 methods: {
+                     submit: function(event) {
+                         event.preventDefault();
+                         var
+                             $form = $('#vm'),
+                             email = this.email.trim().toLowerCase(),
+                             data = {
+                                 email: email,
+                                 passwd: this.passwd==='' ? '' : CryptoJS.SHA1(email + ':' + this.passwd).toString()
+                             };
+                             $.post("/api/authenticate", data, function(data){
+                                  location.assign('/')
+                         });
+                     }
+                 }
+             });
+         });
+        </script>
 
 
 </head>
@@ -20,62 +50,23 @@
     <div class="container">
             <div class="row">
                 <div class="col-md-offset-3 col-md-6">
-                    <form id="vm" class="form-horizontal">
+                    <form id="vm"  class="form-horizontal">
                         <span class="heading">用户登录</span>
                         <div class="form-group">
-                            <input v-model='email' type="email" class="form-control" id="inputEmail3" placeholder="用户名或电子邮件">
+                            <input v-model='email' name='email' type="text" class="form-control" id="inputEmail3" placeholder="电子邮件">
                             <i class="fa fa-user"></i>
                         </div>
                         <div class="form-group help">
-                            <input v-model='passwd' type="password" class="form-control" id="inputPassword3" placeholder="密　码">
+                            <input v-model='passwd' name='passwd' type="password" class="form-control" id="inputPassword3" placeholder="密　码">
                             <i class="fa fa-lock"></i>
-                            <a href="#" class="fa fa-question-circle"></a>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-default">登录</button>
+                            <button @click='submit' type="submit" class="btn btn-default">登录</button>
                         </div>
                     </form>
                 </div>
             </div>
     </div>
-
-
-
-    <script src="../static/js/vue.min.js"></script>
-    <script src="../static/js/jquery.min.js"></script>
-    <script>
-    $(function() {
-    var vmAuth = new Vue({
-        el: '#vm',
-        data: {
-            email: '',
-            passwd: ''
-        },
-        methods: {
-            submit: function(event) {
-                event.preventDefault();
-
-                var
-                    $form = $('#vm'),
-                    email = this.email.trim().toLowerCase(),
-                    data = {
-                        email: email,
-                        passwd: this.passwd==='' ? '' : CryptoJS.SHA1(email + ':' + this.passwd).toString()
-                    };
-
-                  console.log(email);
-                    $form.postJSON('/api/authenticate', data, function(err, result) {
-                    if (! err) {
-                        location.assign('/');
-                    }
-                });
-            }
-        }
-    });
-});
-
-
-    </script>
 </body>
 </html>
 

@@ -50,6 +50,7 @@ async def logger_factory(app, handler):
         return (await handler(request))
     return logger
 
+
 async def auth_factory(app, handler):
     async def auth(request):
         logging.info('check user: %s %s' % (request.method, request.path))
@@ -65,6 +66,7 @@ async def auth_factory(app, handler):
         return (await handler(request))
     return auth
 
+
 async def data_factory(app, handler):
     async def parse_data(request):
         if request.method == 'POST':
@@ -76,6 +78,7 @@ async def data_factory(app, handler):
                 logging.info('request form: %s' % str(request.__data__))
         return (await handler(request))
     return parse_data
+
 
 async def response_factory(app, handler):
     async def response(request):
@@ -119,7 +122,7 @@ async def response_factory(app, handler):
 async def init(loop):
     await orm.create_pool(loop=loop, user='www-data', password='www-data',db='CN_demo')
     app = web.Application(loop=loop, middlewares=[
-        logger_factory, auth_factory, response_factory
+        logger_factory,auth_factory, response_factory
     ])
     init_jinja2(app)
     add_routes(app, 'handlers')
