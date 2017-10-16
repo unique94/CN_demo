@@ -120,6 +120,7 @@ var data = [
 option = {
     title: {
         text: '参与报道的媒体数目与时间的关系',
+        subtext: '第一天为2017.05.27',
         left: 'center'
     },
     tooltip: {
@@ -129,7 +130,7 @@ option = {
         }
     },
     xAxis: {
-        name:'日期',
+        name:'天数',
         type: 'value',
         splitLine: {
             lineStyle: {

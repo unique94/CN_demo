@@ -120,7 +120,7 @@ async def response_factory(app, handler):
 
 
 async def init(loop):
-    await orm.create_pool(loop=loop, user='www-data', password='www-data',db='CN_demo')
+    await orm.create_pool(loop=loop, **configs.db)
     app = web.Application(loop=loop, middlewares=[
         logger_factory,auth_factory, response_factory
     ])
