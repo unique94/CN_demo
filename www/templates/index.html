@@ -124,12 +124,20 @@
 					<h4>信息传播</h4>
 				</div>
 				<div class="col-md-9">
-                    <p>事件发生后，新闻传递网络。各节点为在线新闻机构，边即为之间存在相互转发。</p>
+          <p>事件发生后，新闻的传播网络。随时间推移，各大媒体发布与此相关新闻情况。</p>
+          <p>各节点为在线新闻机构，边即为之间存在相互转发。</p>
 				</div>
+      </div>
 
-			    <div class="col-md-12">
+			<div class="row">
+			  <div class="col-md-6">
 					<div id="echart1" style="height:400px"></div>
 				</div>
+
+        <div class="col-md-6">
+					<div id="echart3" style="height:400px"></div>
+				</div>
+
 			</div>
 		</div>
 	</section>
@@ -144,10 +152,15 @@
                     <p>依据搜集到的用户评论信息（凤凰网，新浪网，网易，搜狐，今日头条等），构建用户关联网络，探讨舆情发展趋势。</p>
                     <p>用户间存在一条回复,关注即构建一条边</p>
 				</div>
+      </div>
 
-				<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-6">
 				    <div id="echart2" style="height:500px"></div>
-                </div>
+        </div>
+      	<div class="col-md-6">
+				    <div id="echart4" style="height:500px"></div>
+        </div>
 			</div>
 		</div>
 	</section>
@@ -159,7 +172,7 @@
 			<div class="row">
 				<div class="col-md-4 footer-branding">
 					<p>天津大学大数据实验室</p>
-                    <p>2017.10</p>
+                    <p>2017年10月</p>
 				</div>
 			</div>
 		</div>
@@ -184,96 +197,7 @@
 
     <script src="../static/js/js/echarts.min.js"></script>
 
-    <script type='text/javascript'>
-	var myChart = echarts.init(document.getElementById('echart1'));
-	var myChart2 = echarts.init(document.getElementById('echart2'));
-
-	myChart.showLoading();
-	myChart2.showLoading();
-
-	$.get('../static/data/test.json', function (webkitDep) {
-
-    	myChart.hideLoading();
-
-
-
-    option = {
-        baseOption:{
-          timeline:{
-            axisType: 'category',
-            show: true,
-            autoPlay: true,
-            playInterval: 1500,
-            data:[]
-          }
-        },
-        options:[]
-      };
-
-      for (var n = 0; n < webkitDep.timeline.length; n++){
-        option.baseOption.timeline.data.push(webkitDep.timeline[n]);
-        option.options.push({
-          series:{
-            type : 'graph',
-            layout:'force',
-            animation: false,
-            draggable:true,
-            data: webkitDep.nodes[n].map(function (node, idx) {
-                node.id = idx;
-                return node;
-            }),
-            categories: webkitDep.categories,
-            force: {
-                edgeLength: 20,
-                repulsion: 20,
-                gravity: 0.1
-            },
-            edges: webkitDep.links[n]
-          }
-        });
-
-        myChart.setOption(option);
-      }
-
-  });
-
-
-    $.get('../static/data/t.json', function (webkitDep) {
-    	myChart2.hideLoading();
-        option = {
-        legend: {
-            data: ['凤凰网', '新浪网', '网易', '搜狐', '今日头条']
-        },
-        series: [{
-            name:'demo',
-            type: 'graph',
-            layout: 'force',
-            animation: false,
-            label: {
-                normal: {
-                    position: 'right',
-                    formatter: '{b}'
-                }
-            },
-            draggable: true,
-            data: webkitDep.nodes.map(function (node, idx) {
-                node.id = idx;
-                return node;
-            }),
-            categories: webkitDep.categories,
-            force: {
-                // initLayout: 'circular'
-                // repulsion: 20,
-                edgeLength: 5,
-                repulsion: 20,
-                gravity: 0.2
-            },
-            edges: webkitDep.links
-        }]
-    };
-    myChart2.setOption(option);
-});
-
+    <script src='../static/js/CN_demo.js'>
     </script>
 </body>
 

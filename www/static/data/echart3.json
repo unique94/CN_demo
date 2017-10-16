@@ -2,27 +2,26 @@
     "type": "force",
     "categories": [
         {
-            "name": "HTMLElement",
+            "name": "网易新闻",
             "keyword": {},
-            "base": "HTMLElement"
+            "base": "网易新闻"
         },
         {
-            "name": "WebGL",
+            "name": "搜狐",
             "keyword": {},
-            "base": "WebGLRenderingContext"
+            "base": "搜狐"
         },
         {
-            "name": "SVG",
+            "name": "新浪网",
             "keyword": {},
-            "base": "SVGElement"
-        },
-        {
-            "name": "CSS",
+            "base": "新浪网"
+        },{
+            "name": "今日头条",
             "keyword": {},
-            "base": "CSSRule"
+            "base": "今日头条"
         },
-        {
-            "name": "Other",
+                {
+            "name": "凤凰网",
             "keyword": {}
         }
     ],
